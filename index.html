@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script defer src="./app.js"></script>
+    <link rel="stylesheet" href="./style.css" />
+    <title>Fighting RPG</title>
+    <style>
+      .rectangle {
+        width: 100px;
+        height: 200px;
+        background-color: #3498db;
+        position: relative;
+        top: 500px;
+        left: 200px;
+      }
+      .rectangleplus {
+        width: 100px;
+        height: 200px;
+        background-color: #3498db;
+        position: relative;
+        top: 300px;
+        left: -200px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="rectangle"></div>
+      <div class="rectangleplus"></div>
+      <h1>Fighting RPG</h1>
+      <p id="result-display"></p>
+    </header>
+    <button id="attack">attack</button>
+    <button id="defend">defend</button>
+    <button id="heal">heal</button>
+  </body>
+</html>
