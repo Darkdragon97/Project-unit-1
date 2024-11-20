@@ -1,90 +1,105 @@
-// constants ----------
-const choices = ['attack', 'defend', 'heal']
-const names = ['player', 'computer']
-const player = 'playerChoice'
-const computer = 'computerChoice'
+const playerHPBar = document.getElementById('player-hp-bar')
+const enemyHPBar = document.getElementById('enemy-hp-bar')
+const messageBox = document.getElementById('message-box')
 
-console.log(choices, names, player, computer)
+let playerMaxHP = 200
+let playerCurrentHP = 200
+let enemyMaxHP = 200
+let enemyCurrentHP = 200
 
-// ------------- Variables
+let isDefending = false
 
-let playerChoice
-let computerChoice
-let message
-
-function init() {
-  console.log('Game initialized')
-  choices = [attack[0], defend[1], heal[2]]
-  lose = false
-  winner = false
-  tie = false
-
-  render()
-}
-
-function render() {}
-
-function updateChoices() {
-  choices.forEach((buttom) => {})
-}
-
-function updateMessage() {
-  if (winner) {
-    messageEl.textContent = 'Player wins! '
-  } else if (tie) {
-    messageEl.textContent = "It's a tie!"
-  } else if (lose) {
-    messageEl.textContent = 'Player lose!'
+function checkGameStatus() {
+  if (enemyCurrentHP <= 0) {
+    messageBox.textContent = 'Victory! Enemy defeated!'
+    messageBox.style.display = 'block'
+  } else if (playerCurrentHP <= 0) {
+    messageBox.textContent = 'You Dead! Game Over!'
+    messageBox.style.display = 'block'
   }
 }
 
-function render() {
-  updateChoices()
-  updateMessage()
+function attack() {
+  const damage = 20
+  enemyCurrentHP -= damage
+  if (enemyCurrentHP < 0) enemyCurrentHP = 0
+  enemyAction()
+  updateHPBars()
 }
 
-//  Cached Element References --------
-
-const resultDisplayElemnt = document.querySelector(result - display)
-
-console.log(resultDisplayElemnt)
-
-// functions ----
-
-const getPlayerChoice = (event) => {
-  playerChoice = event.target.id
+function defend() {
+  isDefending = true
+  const damage = 20
+  const reducedDamage = damage / 5
+  playerCurrentHP -= reducedDamage
+  if (playerCurrentHP < 0) playerCurrentHP = 0
+  enemyAction()
+  updateHPBars()
 }
 
-console.log(getPlayerChoice)
-
-const getComputerChoice = () => {
-  const randomIndex = Math.floor(Math.random() * Choices.length)
-  computerChoice = choices[randomIndex]
+function heal() {
+  const healAmount = 20
+  playerCurrentHP += healAmount
+  if (playerCurrentHP > playerMaxHP) playerCurrentHP = playerMaxHP
+  enemyAction()
+  updateHPBars()
 }
 
-console.log(getComputerChoice)
+function enemyAttack() {
+  const damage = 20
+  if (isDefending) {
+    const reducedDamage = Math.max(damage - 5, 0)
+    playerCurrentHP -= reducedDamage
+  } else {
+    playerCurrentHP -= damage
+  }
+  if (playerCurrentHP < 0) playerCurrentHP = 0
+  updateHPBars()
+}
 
-const compare = () => {
-  if (playerChoice === 'defend'[1] && computerChoice === 'defend'[1]) {
-    message = 'both get no damage'
-  } else if (playerChoice === 'attack'[0] && computerChoice === attack[0]) {
-    message = 'both get damage!'
-  } else if (playerChoice === 'defend'[1] && computerChoice === 'attack'[0]) {
-    message = 'player get no damage!'
-  } else if (playerChoice === 'attack'[0] && computerChoice === 'defend'[1]) {
-    message = 'computer get no damage!'
-  } else if (playerChoice === 'heal'[2] && computerChoice === 'attack'[0]) {
-    message = 'player recover and get damage from computer!'
-  } else if (playerChoice === 'attack'[0] && computerChoice === 'heal'[2]) {
-    message = 'computer recover and get damage from player!'
-  } else if (playerChoice === 'attack'[0] && computerChoice === 'heal'[2]) {
-    message = 'computer recover and get damage from player!'
-  } else if (playerChoice === 'attack'[0] && computerChoice === 'heal'[2]) {
-    message = 'computer recover and get damage from player!'
-  } else if (playerChoice === 'defend'[1] && computerChoice === 'heal'[2]) {
-    message = 'computer recover!'
-  } else if (playerChoice === 'heal'[2] && computerChoice === 'defend'[1]) {
-    message = 'player recover!'
+function enemyDefend() {
+  updateHPBars()
+}
+
+function enemyHeal() {
+  const healAmount = 20
+  enemyCurrentHP += healAmount
+  if (enemyCurrentHP > enemyMaxHP) enemyCurrentHP = enemyMaxHP
+  updateHPBars()
+}
+
+function enemyAction() {
+  const actions = ['attack', 'defend', 'heal']
+  const randomAction = actions[Math.floor(Math.random() * actions.length)]
+
+  switch (randomAction) {
+    case 'attack':
+      console.log('Enemy attacked!')
+      enemyAttack()
+      break
+    case 'defend':
+      console.log('Enemy defended!')
+      enemyDefend()
+      break
+    case 'heal':
+      console.log('Enemy healed!')
+      enemyHeal()
+      break
   }
 }
-console.log(compare)
+
+function updateHPBars() {
+  const playerHPPercentage = playerCurrentHP / playerMaxHP
+  playerHPBar.style.width = `${playerHPPercentage * 100}%`
+
+  const enemyHPPercentage = enemyCurrentHP / enemyMaxHP
+  enemyHPBar.style.width = `${enemyHPPercentage * 100}%`
+
+  checkGameStatus()
+}
+
+document.getElementById('attack-btn').addEventListener('click', attack)
+document.getElementById('defend-btn').addEventListener('click', defend)
+document.getElementById('heal-btn').addEventListener('click', heal)
+
+updateHPBars()

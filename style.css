@@ -1,37 +1,127 @@
+h1 {
+  position: fixed;
+}
+
 html,
 body {
   margin: 0;
+  padding: 0;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   background-color: red;
-  shape-image-threshold: inherit;
 }
 
 header {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
-#result-display {
-  min-height: 20px;
+.character {
+  position: fixed;
+  width: 200px;
+  height: 250px;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.player {
+  background-image: url('https://p7.hiclipart.com/preview/389/162/496/platform-game-side-scrolling-video-game-sprite-handpainted-monster-thumbnail.jpg');
+  left: 20px;
+  bottom: 20px;
+}
+
+.enemy {
+  background-image: url('https://p1.hiclipart.com/preview/511/263/712/superhero-demitri-maximoff-darkstalkers-resurrection-night-warriors-darkstalkers-revenge-darkstalkers-3-video-games-character-fighting-game-png-clipart-thumbnail.jpg');
+  right: 20px;
+  bottom: 20px;
+}
+
+/* @keyframes playerAttack {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes enemyAttack {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes defendAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+} */
+
+#player-hp-bar-container {
+  width: 300px;
+  height: 30px;
+  border: 2px solid black;
+  margin: 10px;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+}
+
+#enemy-hp-bar-container {
+  width: 300px;
+  height: 30px;
+  border: 2px solid black;
+  margin: 10px;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+
+#player-hp-bar,
+#enemy-hp-bar {
+  height: 100%;
+  width: 100%;
+  background-color: green;
 }
 
 button {
   margin: 10px;
   font-size: 40px;
-  background-color: transparent;
+  background-color: color(from color srgb r g b);
   border: 1px solid rgba(248, 247, 247, 0.877);
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  position: relative;
 }
 
 button:hover {
-  border: 1px solid rgb(9, 9, 252);
+  background-color: blue; 
   cursor: pointer;
+}
+
+button:active {
+  background-color: darkblue; /* 
+}
+
+#result-display {
+  min-height: 20px;
 }
